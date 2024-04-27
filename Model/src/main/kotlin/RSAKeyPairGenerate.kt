@@ -8,23 +8,19 @@ private val logger = KotlinLogging.logger {}
 
 //"data class" could be used but its not recommended for this case (requires at least one constructor parameter)
 //allow key size to be set in constructor
-data class RSAKeyPairGen(private val secureRandom: SecureRandom) : KeyPairGen {
+data class RSAKeyPairGenerate(private val secureRandom: SecureRandom) : KeyPair {
 
     val KEY_SIZE = 1024 //private not required as it is final and we want to have access to this field in tests
     val publicKey: BigInteger
     val privateKey: BigInteger
+    val n: BigInteger
 
     init {
         logger.info { "Generating RSA key pair" }
-//        val secureRandom = SecureRandom()
         val (p, q) = generateDistinctProbablePrimes(secureRandom)
+        n = p.multiply(q)
         val phi = generatePhi(p, q)
-//        val n = p.multiply(q) executed in phi calculation
-//        val p = BigInteger.valueOf(5) //for testing
-//        val q = BigInteger.valueOf(7) //for testing
-//        val phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)) //Euler's totient function
         publicKey = generatePublicKey(phi, secureRandom)
-//        privateKey = publicKey.modInverse(phi)
         privateKey = generatePrivateKey(phi, publicKey)
     }
 
@@ -54,6 +50,10 @@ data class RSAKeyPairGen(private val secureRandom: SecureRandom) : KeyPairGen {
         return Pair(p, q)
     }
 
+    override fun getN(): ByteArray {
+        return n.toByteArray()
+    }
+
     override fun getPublicKey(): ByteArray {
         return publicKey.toByteArray()
     }
@@ -64,6 +64,10 @@ data class RSAKeyPairGen(private val secureRandom: SecureRandom) : KeyPairGen {
 
     override fun getKeysAsPair(): Pair<ByteArray, ByteArray> {
         return Pair(getPublicKey(), getPrivateKey())
+    }
+
+    override fun KeysAndNAsTriple(): Triple<ByteArray, ByteArray, ByteArray> {
+        return Triple(getPublicKey(), getPrivateKey(), getN())
     }
 }
 

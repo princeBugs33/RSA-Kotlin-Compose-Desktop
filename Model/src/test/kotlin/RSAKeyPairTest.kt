@@ -1,4 +1,4 @@
-import edu.kdmk.cipher.implementation.RSAKeyPairGen
+import edu.kdmk.cipher.implementation.RSAKeyPairGenerate
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Test
 
@@ -10,12 +10,12 @@ import kotlin.reflect.jvm.isAccessible
 
 private val logger = KotlinLogging.logger {}
 
-class RSAKeyPairGenTest {
+class RSAKeyPairTest {
 
     @Test
     fun testGeneratePhi() {
-        val rsaKeyPairGen = RSAKeyPairGen(SecureRandom())
-        val generatePhi = RSAKeyPairGen::class.declaredMemberFunctions.first { it.name == "generatePhi" }
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        val generatePhi = RSAKeyPairGenerate::class.declaredMemberFunctions.first { it.name == "generatePhi" }
         generatePhi.isAccessible = true
 
         val p = BigInteger.valueOf(11)
@@ -29,8 +29,8 @@ class RSAKeyPairGenTest {
 
     @Test
     fun testGeneratePublicKey() {
-        val rsaKeyPairGen = RSAKeyPairGen(SecureRandom())
-        val generatePublicKey = RSAKeyPairGen::class.declaredMemberFunctions.first { it.name == "generatePublicKey" }
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        val generatePublicKey = RSAKeyPairGenerate::class.declaredMemberFunctions.first { it.name == "generatePublicKey" }
         generatePublicKey.isAccessible = true
 
         val phi = BigInteger.valueOf(120) // You can replace this with a value that makes sense for your test
@@ -43,8 +43,8 @@ class RSAKeyPairGenTest {
 
     @Test
     fun testGeneratePrivateKey() {
-        val rsaKeyPairGen = RSAKeyPairGen(SecureRandom())
-        val generatePrivateKey = RSAKeyPairGen::class.declaredMemberFunctions.first { it.name == "generatePrivateKey" }
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        val generatePrivateKey = RSAKeyPairGenerate::class.declaredMemberFunctions.first { it.name == "generatePrivateKey" }
         generatePrivateKey.isAccessible = true
 
         val phi = BigInteger.valueOf(120)
@@ -57,8 +57,8 @@ class RSAKeyPairGenTest {
 
     @Test
     fun testGenerateDistinctProbablePrimes() {
-        val rsaKeyPairGen = RSAKeyPairGen(SecureRandom())
-        val generateDistinctProbablePrimes = RSAKeyPairGen::class.declaredMemberFunctions.first { it.name == "generateDistinctProbablePrimes" }
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        val generateDistinctProbablePrimes = RSAKeyPairGenerate::class.declaredMemberFunctions.first { it.name == "generateDistinctProbablePrimes" }
         generateDistinctProbablePrimes.isAccessible = true
 
         val secureRandom = SecureRandom()

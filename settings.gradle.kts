@@ -16,4 +16,4 @@ plugins {
 }
 
 rootProject.name = "RSA_app"
-include("Model")
+include(":Model")
