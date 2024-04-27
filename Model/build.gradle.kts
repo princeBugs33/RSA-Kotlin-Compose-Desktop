@@ -15,6 +15,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     testImplementation("org.slf4j:slf4j-simple:2.0.13")
     testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation(kotlin("reflect"))
 
 }
 
