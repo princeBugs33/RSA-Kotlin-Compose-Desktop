@@ -20,6 +20,11 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
+//    implementation("io.klogging:klogging-jvm:0.5.11")
+    implementation("io.github.oshai:kotlin-logging-jvm:6.0.9")
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    testImplementation("org.slf4j:slf4j-simple:2.0.13")
+
 }
 
 compose.desktop {
