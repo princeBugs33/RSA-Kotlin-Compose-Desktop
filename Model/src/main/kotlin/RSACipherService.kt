@@ -2,11 +2,6 @@ package edu.kdmk.cipher.implementation
 
 import java.math.BigInteger
 
-enum class OperationMode {
-    ENCRYPT_PRIVATE_DECRYPT_PUBLIC,
-    ENCRYPT_PUBLIC_DECRYPT_PRIVATE
-}
-
 class RSACipherService(private val keyPair: KeyPair, private val operationMode: OperationMode) : CipherService {
     val n = BigInteger(keyPair.getN())
     val publicKey = BigInteger(keyPair.getPublicKey())
