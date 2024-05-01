@@ -54,6 +54,7 @@ fun App() {
             }
             Row () {
                 Button(
+
                     onClick = {
 //                        val SecureRandom = SecureRandom()
 //                        val RSAKeyPairGenerate = RSAKeyPairGenerate(SecureRandom)
@@ -82,7 +83,15 @@ fun App() {
                 }
                 Button(
                     onClick = {
-                        keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
+                        try {
+                            keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
+                        } catch (e: Exception) {
+                            println("Invalid key")
+//                            keyN = ""
+//                            keyPrivate = ""
+//                            keyPublic = ""
+                        }
+                        //keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
                         val rsaCipherService = RSACipherService(keyPair, mode)
                         if (message.isNotEmpty()) {
                             cipher = java.util.Base64.getEncoder().encodeToString(rsaCipherService.encrypt(message.toByteArray()))
@@ -93,7 +102,15 @@ fun App() {
                 }
                 Button(
                     onClick = {
-                        keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
+                        try {
+                            keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
+                        } catch (e: Exception) {
+                            println("Invalid key")
+//                            keyN = ""
+//                            keyPrivate = ""
+//                            keyPublic = ""
+                        }
+                        //keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
                         val rsaCipherService = RSACipherService(keyPair, mode)
                         if (cipher.isNotEmpty()) {
                             message = convertToString(rsaCipherService.decrypt(java.util.Base64.getDecoder().decode(cipher)))
