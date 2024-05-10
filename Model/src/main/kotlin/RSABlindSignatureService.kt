@@ -1,7 +1,11 @@
 package edu.kdmk.cipher.implementation
 
+import io.github.oshai.kotlinlogging.KotlinLogging
+import jakarta.xml.bind.DatatypeConverter
 import java.math.BigInteger
 import java.security.SecureRandom
+
+private val logger = KotlinLogging.logger {}
 
 class RSABlindSignatureService(private val keyPair: KeyPair, private val secureRandom: SecureRandom) {
 //    val n = BigInteger(keyPair.getN())
@@ -28,6 +32,7 @@ class RSABlindSignatureService(private val keyPair: KeyPair, private val secureR
             blinder = BigInteger(n.bitLength(), secureRandom)
         } while (blinder.gcd(n) != BigInteger.ONE)
         // m' ≡ mr^e (mod N)
+        logger.info { "Blinder: " + DatatypeConverter.printHexBinary(blinder.toByteArray()) }
         val blindedData = (data.multiply(blinder.modPow(publicKey, n))).mod(n)
 
         // s' ≡ (m')^d (mod N)
