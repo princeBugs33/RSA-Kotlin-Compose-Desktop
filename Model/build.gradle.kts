@@ -16,6 +16,11 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.13")
     testImplementation("io.mockk:mockk:1.13.10")
     testImplementation(kotlin("reflect"))
+    // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation("commons-io:commons-io:2.16.1")
+
 
 }
 

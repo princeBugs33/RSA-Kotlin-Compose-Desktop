@@ -20,13 +20,14 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
-//    implementation("io.klogging:klogging-jvm:0.5.11")
+    // implementation("io.klogging:klogging-jvm:0.5.11")
     implementation("io.github.oshai:kotlin-logging-jvm:6.0.9")
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation("org.slf4j:slf4j-simple:2.0.13")
     implementation(project(":Model"))
     // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
+    implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha03")
 
 
 }
@@ -34,7 +35,7 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "MainKt"
-
+//        mainClass = "RSACipherKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "RSA"
