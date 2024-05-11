@@ -28,9 +28,13 @@ class RSABlindSignatureService(private val keyPair: KeyPair, private val secureR
     fun sign(data: ByteArray): ByteArray {
         val data = BigInteger(1, data)
         var blinder: BigInteger
+//        do {
+//            blinder = BigInteger(n.bitLength(), secureRandom)
+//        } while (blinder.gcd(n) != BigInteger.ONE)
         do {
             blinder = BigInteger(n.bitLength(), secureRandom)
-        } while (blinder.gcd(n) != BigInteger.ONE)
+        } while (blinder.gcd(n) != BigInteger.ONE || blinder >= n || blinder <= BigInteger.ONE)
+
         // m' ≡ mr^e (mod N)
         logger.info { "Blinder: " + DatatypeConverter.printHexBinary(blinder.toByteArray()) }
         val blindedData = (data.multiply(blinder.modPow(publicKey, n))).mod(n)
