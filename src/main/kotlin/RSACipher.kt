@@ -1,7 +1,6 @@
+import Navigation.Screen
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -11,9 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import edu.kdmk.cipher.implementation.*
+import edu.kdmk.cipher.implementation.Converter.convertByteArrayToString
+import edu.kdmk.cipher.implementation.RSACipher.OperationMode
+import edu.kdmk.cipher.implementation.RSACipher.RSACipherService
+import edu.kdmk.cipher.implementation.RSAKeyGen.KeyPair
+import edu.kdmk.cipher.implementation.RSAKeyGen.RSAKeyPairFill
+import edu.kdmk.cipher.implementation.RSAKeyGen.RSAKeyPairGenerate
 import jakarta.xml.bind.DatatypeConverter
 import java.security.SecureRandom
+import java.util.*
 
 
 @Composable
@@ -34,20 +39,51 @@ fun Cipher(navController: NavController) {
             modifier = Modifier.padding(16.dp)
         ){
 
-            Row () {
+//            Row () {
+//                OutlinedTextField(
+//                    value = message,
+//                    onValueChange = { message = it },
+//                    label = { Text("Message:") }
+//                )
+//                OutlinedTextField(
+//                    value = cipher,
+//                    onValueChange = { cipher = it },
+//                    label = { Text("Cipher:") }
+//                )
+//            }
+            Row (
+                modifier = Modifier.fillMaxWidth().height(220.dp),
+
+                ) {
                 OutlinedTextField(
                     value = message,
                     onValueChange = { message = it },
-                    label = { Text("Message:") }
+                    label = { Text("Message:") },
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(end = 2.5.dp)
+                        .fillMaxHeight(),
+                    singleLine = false,
+                    //enabled = isMessageUsable
                 )
                 OutlinedTextField(
                     value = cipher,
                     onValueChange = { cipher = it },
-                    label = { Text("Cipher:") }
+                    label = { Text("Signature:") },
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(start = 2.5.dp)
+                        .fillMaxHeight(),
+                    singleLine = false
                 )
             }
-            Row () {
+
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
                 Button(
+                    modifier = Modifier.padding(5.dp),
                     onClick = {
                         navController.navigate(route = Screen.RSABlindSignature.route)
                     }
@@ -55,7 +91,7 @@ fun Cipher(navController: NavController) {
                     Text("Blind Signature")
                 }
                 Button(
-
+                    modifier = Modifier.padding(5.dp),
                     onClick = {
 //                        val SecureRandom = SecureRandom()
 //                        val RSAKeyPairGenerate = RSAKeyPairGenerate(SecureRandom)
@@ -70,19 +106,11 @@ fun Cipher(navController: NavController) {
                 ) {
                     Text("Generate Keys")
                 }
-                Button(
-                    onClick = {
-                        if (mode == OperationMode.ENCRYPT_PRIVATE_DECRYPT_PUBLIC) {
-                            mode = OperationMode.ENCRYPT_PUBLIC_DECRYPT_PRIVATE
 
-                        } else {
-                            mode = OperationMode.ENCRYPT_PRIVATE_DECRYPT_PUBLIC
-                        }
-                    }
-                ) {
-                    Text(mode.toString())
-                }
+
+
                 Button(
+                    modifier = Modifier.padding(5.dp),
                     onClick = {
                         try {
                             keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
@@ -103,6 +131,7 @@ fun Cipher(navController: NavController) {
                     Text("Encrypt")
                 }
                 Button(
+                    modifier = Modifier.padding(5.dp),
                     onClick = {
                         try {
                             keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
@@ -115,7 +144,7 @@ fun Cipher(navController: NavController) {
                         //keyPair = RSAKeyPairFill(DatatypeConverter.parseHexBinary(keyPublic), DatatypeConverter.parseHexBinary(keyPrivate), DatatypeConverter.parseHexBinary(keyN))
                         val rsaCipherService = RSACipherService(keyPair, mode)
                         if (cipher.isNotEmpty()) {
-                            message = convertByteArrayToString(rsaCipherService.decrypt(java.util.Base64.getDecoder().decode(cipher)))
+                            message = convertByteArrayToString(rsaCipherService.decrypt(Base64.getDecoder().decode(cipher)))
 
                         }
                     }
@@ -123,20 +152,44 @@ fun Cipher(navController: NavController) {
                     Text("Decrypt")
                 }
             }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    modifier = Modifier.padding(5.dp),
+                    onClick = {
+                        if (mode == OperationMode.ENCRYPT_PRIVATE_DECRYPT_PUBLIC) {
+                            mode = OperationMode.ENCRYPT_PUBLIC_DECRYPT_PRIVATE
+
+                        } else {
+                            mode = OperationMode.ENCRYPT_PRIVATE_DECRYPT_PUBLIC
+                        }
+                    }
+                ) {
+                    Text(mode.toString())
+                }
+            }
+
+
             OutlinedTextField(
                 value = keyPublic,
                 onValueChange = { keyPublic = it },
-                label = { Text("Public Key:") }
+                label = { Text("Public Key:") },
+                singleLine = true
             )
             OutlinedTextField(
                 value = keyPrivate,
                 onValueChange = { keyPrivate = it },
-                label = { Text("Private Key:") }
+                label = { Text("Private Key:") },
+                singleLine = true
             )
             OutlinedTextField(
                 value = keyN,
                 onValueChange = { keyN = it },
-                label = { Text("N:") }
+                label = { Text("N:") },
+                singleLine = true
             )
 
 

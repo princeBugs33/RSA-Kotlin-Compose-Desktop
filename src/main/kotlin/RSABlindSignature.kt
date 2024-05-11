@@ -7,7 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import edu.kdmk.cipher.implementation.*
+import edu.kdmk.cipher.implementation.Converter.convertFileToByteArray
+import edu.kdmk.cipher.implementation.Converter.convertStringToByteArray
+import edu.kdmk.cipher.implementation.Converter.hashFromByteArray
+import edu.kdmk.cipher.implementation.Converter.hashStringFromByteArray
+import edu.kdmk.cipher.implementation.RSABlindSignature.RSABlindSignatureService
+import edu.kdmk.cipher.implementation.RSAKeyGen.KeyPair
+import edu.kdmk.cipher.implementation.RSAKeyGen.RSAKeyPairFill
+import edu.kdmk.cipher.implementation.RSAKeyGen.RSAKeyPairGenerate
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.xml.bind.DatatypeConverter
 import java.awt.FileDialog
@@ -63,15 +70,6 @@ fun BlindSignature(navController: NavController) {
                 modifier = Modifier.fillMaxWidth().height(270.dp),
 
             ) {
-//                when (dataConverterType) {
-//                    DataConverterType.MESSAGE -> {
-//
-//                    }
-//                    DataConverterType.FILE -> {
-//
-//                    }
-//                }
-
                 OutlinedTextField(
                     value = messageORfilePath,
                     onValueChange = { messageORfilePath = it },
@@ -99,15 +97,15 @@ fun BlindSignature(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-//                Button(
-//                    modifier = Modifier.padding(5.dp),
-//                    onClick = {
-//                        navController.navigate(route = Screen.RSACipher.route)
-//                    },
-//                    enabled = true
-//                ) {
-//                    Text("RSA Cipher")
-//                }
+                Button(
+                    modifier = Modifier.padding(5.dp),
+                    onClick = {
+                        navController.navigate(route = Navigation.Screen.RSACipher.route)
+                    },
+                    enabled = true
+                ) {
+                    Text("RSA Cipher")
+                }
 
                 Button(
                     modifier = Modifier.padding(5.dp),

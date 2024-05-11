@@ -1,4 +1,4 @@
-package edu.kdmk.cipher.implementation
+package edu.kdmk.cipher.implementation.RSAKeyGen
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.math.BigInteger

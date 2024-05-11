@@ -1,5 +1,6 @@
-package edu.kdmk.cipher.implementation
+package edu.kdmk.cipher.implementation.RSABlindSignature
 
+import edu.kdmk.cipher.implementation.RSAKeyGen.KeyPair
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.xml.bind.DatatypeConverter
 import java.math.BigInteger

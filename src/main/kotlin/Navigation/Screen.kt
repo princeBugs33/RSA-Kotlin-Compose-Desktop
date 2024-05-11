@@ -1,3 +1,5 @@
+package Navigation
+
 sealed class Screen(val route : String) {
 
     object RSACipher : Screen(route = "rsa_cipher")

@@ -1,6 +1,7 @@
-package edu.kdmk.cipher.implementation
+package edu.kdmk.cipher.implementation.RSAKeyGen
 
-class RSAKeyPairFill(private val publicKey: ByteArray, private val privateKey: ByteArray, private val n: ByteArray) : KeyPair{
+class RSAKeyPairFill(private val publicKey: ByteArray, private val privateKey: ByteArray, private val n: ByteArray) :
+    KeyPair {
     override fun getPublicKey(): ByteArray {
         return publicKey
     }

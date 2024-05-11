@@ -1,4 +1,4 @@
-import edu.kdmk.cipher.implementation.RSAKeyPairGenerate
+import edu.kdmk.cipher.implementation.RSAKeyGen.RSAKeyPairGenerate
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Test
 

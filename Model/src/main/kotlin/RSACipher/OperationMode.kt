@@ -1,4 +1,4 @@
-package edu.kdmk.cipher.implementation
+package edu.kdmk.cipher.implementation.RSACipher
 
 enum class OperationMode {
     ENCRYPT_PRIVATE_DECRYPT_PUBLIC,

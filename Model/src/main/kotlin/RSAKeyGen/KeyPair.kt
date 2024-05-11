@@ -1,4 +1,4 @@
-package edu.kdmk.cipher.implementation
+package edu.kdmk.cipher.implementation.RSAKeyGen
 
 interface KeyPair {
     fun getPublicKey(): ByteArray
