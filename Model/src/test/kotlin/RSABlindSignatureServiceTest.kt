@@ -18,7 +18,7 @@ class RSABlindSignatureServiceTest {
     fun blindSignatureTest() {
         val secureRandom = SecureRandom()
         val keyPair : KeyPair = RSAKeyPairGenerate(secureRandom)
-        val testString = "chuj na podlodze"
+        val testString = "na podlodze"
         val convertedString = convertStringToByteArray(testString)
 
         val rsaBlindSignatureService = RSABlindSignatureService(keyPair, secureRandom)
@@ -44,7 +44,7 @@ class RSABlindSignatureServiceTest {
     fun blindSignatureTest3() {
         val secureRandom = SecureRandom()
         val keyPair : KeyPair = RSAKeyPairGenerate(secureRandom)
-        val testString = "chuj na podlodze"
+        val testString = "na podlodze"
         val convertedString = convertStringToByteArray(testString)
         val hashedString = hashFromByteArray(convertedString)
 

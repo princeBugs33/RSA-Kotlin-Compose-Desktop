@@ -29,26 +29,28 @@ class RSABlindSignatureService(private val keyPair: KeyPair, private val secureR
     fun sign(data: ByteArray): ByteArray {
         val data = BigInteger(1, data)
         var blinder: BigInteger
-//        do {
-//            blinder = BigInteger(n.bitLength(), secureRandom)
-//        } while (blinder.gcd(n) != BigInteger.ONE)
+
+        // Generowanie wartości "blinder", która jest względnie pierwsza z n i 1 < blinder < n
         do {
             blinder = BigInteger(n.bitLength(), secureRandom)
         } while (blinder.gcd(n) != BigInteger.ONE || blinder >= n || blinder <= BigInteger.ONE)
 
         // m' ≡ mr^e (mod N)
+        // Obliczanie "blindedData" poprzez pomnożenie danych wejściowych przez blinder podniesiony do potęgi publicKey modulo n
         logger.info { "Blinder: " + DatatypeConverter.printHexBinary(blinder.toByteArray()) }
         val blindedData = (data.multiply(blinder.modPow(publicKey, n))).mod(n)
 
         // s' ≡ (m')^d (mod N)
+        // Obliczanie "blindSignature" poprzez podniesienie "blindedData" do potęgi privateKey modulo n
         val blindSignature = blindedData.modPow(privateKey, n)
 
-        // Unblind the signature
+        // Odsłanianie sygnatury poprzez pomnożenie "blindSignature" przez odwrotność modularną "blinder" modulo n
         val signature = (blindSignature.multiply(blinder.modInverse(n))).mod(n)
 
         return signature.toByteArray()
     }
 
+    // Weryfikacja sygnatury poprzez sprawdzenie, czy podniesienie sygnatury do potęgi publicKey modulo n jest równe danym wejściowym
     fun verify(data: ByteArray, signature: ByteArray): Boolean {
         val data = BigInteger(1, data)
         val signature = BigInteger(1, signature)

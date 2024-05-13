@@ -69,13 +69,25 @@ class RSAKeyPairTest {
 
     @Test
     fun getPublicKey() {
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        rsaKeyPairGen.getPublicKey()
     }
 
     @Test
     fun getPrivateKey() {
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        rsaKeyPairGen.getPrivateKey()
+    }
+
+    @Test
+    fun getN() {
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        rsaKeyPairGen.getN()
     }
 
     @Test
     fun getKeysAsPair() {
+        val rsaKeyPairGen = RSAKeyPairGenerate(SecureRandom())
+        rsaKeyPairGen.getKeysAsPair()
     }
 }
